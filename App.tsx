@@ -25,7 +25,8 @@ const SLIDES = [
   'KPI Studio',
   'Impacto Cruzado',
   'Cadencia y Teams',
-  'Dashboard Ejecutivo'
+  'Dashboard Ejecutivo',
+  'Video'
 ];
 
 const App: React.FC = () => {
@@ -84,6 +85,35 @@ const App: React.FC = () => {
       ))}
     </div>
   );
+
+  const renderVideo = () => {
+    // En Vite, los archivos en public/ se sirven desde la raíz
+    // En desarrollo: baseUrl será '/' 
+    // En producción (GitHub Pages): baseUrl será '/osac-manual-funciones/'
+    const baseUrl = (import.meta as any).env?.BASE_URL || '/osac-manual-funciones/';
+    const videoPath = `${baseUrl}assets/AI Agent Specialist.mp4`;
+    
+    return (
+      <div className="h-full flex flex-col items-center justify-center">
+        <div className="w-full max-w-6xl">
+          <div className="bg-white rounded-3xl shadow-xl p-8 border border-slate-200">
+            <h2 className="text-3xl font-black text-slate-900 mb-6 text-center">AI Agent Specialist</h2>
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <video 
+                className="absolute top-0 left-0 w-full h-full rounded-2xl"
+                controls
+                preload="metadata"
+                style={{ objectFit: 'contain' }}
+              >
+                <source src={videoPath} type="video/mp4" />
+                Tu navegador no soporta la reproducción de video.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const renderCadence = () => (
     <div className="grid grid-cols-12 gap-8 h-full items-start">
@@ -193,6 +223,7 @@ const App: React.FC = () => {
       case 5: return <ImpactGraph />;
       case 6: return renderCadence();
       case 7: return <DashboardSlide />;
+      case 8: return renderVideo();
       default: return <div>Slide no encontrada</div>;
     }
   };
