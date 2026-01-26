@@ -91,13 +91,16 @@ const App: React.FC = () => {
     // El base path ya está configurado en vite.config.ts como '/osac-manual-funciones/'
     // La ruta debe ser relativa al base path
     const baseUrl = (import.meta as any).env?.BASE_URL || '/osac-manual-funciones/';
-    // El nombre del archivo - probamos sin codificar primero, luego con codificación si es necesario
+    // Intentar primero con el nombre simple sin espacios, luego con el nombre original codificado
     const videoFileName = 'AI Agent Specialist.mp4';
-    // Construir la ruta completa - usar encodeURI para toda la ruta
+    const videoFileNameSimple = 'video.mp4';
+    // Construir ambas rutas posibles
     const videoPath = `${baseUrl}assets/${encodeURIComponent(videoFileName)}`;
+    const videoPathSimple = `${baseUrl}assets/${videoFileNameSimple}`;
     
-    // Debug: mostrar la ruta en consola
-    console.log('Video path:', videoPath);
+    // Debug: mostrar las rutas en consola
+    console.log('Video path (encoded):', videoPath);
+    console.log('Video path (simple):', videoPathSimple);
     console.log('Base URL:', baseUrl);
     
     return (
