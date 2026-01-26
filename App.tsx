@@ -88,18 +88,17 @@ const App: React.FC = () => {
 
   const renderVideo = () => {
     // En Vite, los archivos en public/ se copian a dist/ manteniendo su estructura
-    // El base path ya está configurado en vite.config.ts
+    // El base path ya está configurado en vite.config.ts como '/osac-manual-funciones/'
     // La ruta debe ser relativa al base path
     const baseUrl = (import.meta as any).env?.BASE_URL || '/osac-manual-funciones/';
-    // El nombre del archivo con espacios necesita ser codificado
+    // El nombre del archivo - probamos sin codificar primero, luego con codificación si es necesario
     const videoFileName = 'AI Agent Specialist.mp4';
-    // Construir la ruta completa
+    // Construir la ruta completa - usar encodeURI para toda la ruta
     const videoPath = `${baseUrl}assets/${encodeURIComponent(videoFileName)}`;
     
-    // Debug: mostrar la ruta en consola (solo en desarrollo)
-    if (import.meta.env.DEV) {
-      console.log('Video path:', videoPath);
-    }
+    // Debug: mostrar la ruta en consola
+    console.log('Video path:', videoPath);
+    console.log('Base URL:', baseUrl);
     
     return (
       <div className="h-full flex flex-col items-center justify-center">
@@ -112,10 +111,21 @@ const App: React.FC = () => {
                 controls
                 preload="metadata"
                 style={{ objectFit: 'contain' }}
+                onError={(e) => {
+                  console.error('Error loading video:', e);
+                  console.error('Video path attempted:', videoPath);
+                }}
+                onLoadStart={() => {
+                  console.log('Video loading started');
+                }}
               >
+                <source src={videoPathSimple} type="video/mp4" />
                 <source src={videoPath} type="video/mp4" />
                 Tu navegador no soporta la reproducción de video.
               </video>
+              <div className="mt-4 text-xs text-slate-500 text-center">
+                Ruta: {videoPath}
+              </div>
             </div>
           </div>
         </div>
