@@ -91,7 +91,9 @@ const App: React.FC = () => {
     // En desarrollo: baseUrl será '/' 
     // En producción (GitHub Pages): baseUrl será '/osac-manual-funciones/'
     const baseUrl = (import.meta as any).env?.BASE_URL || '/osac-manual-funciones/';
-    const videoPath = `${baseUrl}assets/AI Agent Specialist.mp4`;
+    // Codificar el nombre del archivo para manejar espacios correctamente
+    const videoFileName = encodeURIComponent('AI Agent Specialist.mp4');
+    const videoPath = `${baseUrl}assets/${videoFileName}`;
     
     return (
       <div className="h-full flex flex-col items-center justify-center">
