@@ -87,13 +87,19 @@ const App: React.FC = () => {
   );
 
   const renderVideo = () => {
-    // En Vite, los archivos en public/ se sirven desde la raíz
-    // En desarrollo: baseUrl será '/' 
-    // En producción (GitHub Pages): baseUrl será '/osac-manual-funciones/'
+    // En Vite, los archivos en public/ se copian a dist/ manteniendo su estructura
+    // El base path ya está configurado en vite.config.ts
+    // La ruta debe ser relativa al base path
     const baseUrl = (import.meta as any).env?.BASE_URL || '/osac-manual-funciones/';
-    // Codificar el nombre del archivo para manejar espacios correctamente
-    const videoFileName = encodeURIComponent('AI Agent Specialist.mp4');
-    const videoPath = `${baseUrl}assets/${videoFileName}`;
+    // El nombre del archivo con espacios necesita ser codificado
+    const videoFileName = 'AI Agent Specialist.mp4';
+    // Construir la ruta completa
+    const videoPath = `${baseUrl}assets/${encodeURIComponent(videoFileName)}`;
+    
+    // Debug: mostrar la ruta en consola (solo en desarrollo)
+    if (import.meta.env.DEV) {
+      console.log('Video path:', videoPath);
+    }
     
     return (
       <div className="h-full flex flex-col items-center justify-center">

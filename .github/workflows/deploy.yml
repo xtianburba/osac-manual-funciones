@@ -25,6 +25,19 @@ jobs:
         with:
           lfs: true
       
+      - name: Verify LFS files
+        run: |
+          echo "Checking Git LFS files:"
+          git lfs ls-files
+          echo "Checking if video file exists:"
+          ls -lh public/assets/ || echo "Directory not found"
+          if [ -f "public/assets/AI Agent Specialist.mp4" ]; then
+            echo "✓ Video file found and size:"
+            ls -lh "public/assets/AI Agent Specialist.mp4"
+          else
+            echo "✗ Video file NOT found!"
+          fi
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -35,6 +48,21 @@ jobs:
       
       - name: Build
         run: npm run build
+      
+      - name: Verify build output
+        run: |
+          echo "Checking dist folder:"
+          ls -lh dist/ || echo "dist folder not found"
+          if [ -d "dist/assets" ]; then
+            echo "Checking dist/assets:"
+            ls -lh dist/assets/ || echo "assets folder empty"
+            if [ -f "dist/assets/AI Agent Specialist.mp4" ]; then
+              echo "✓ Video file in dist/assets/"
+              ls -lh "dist/assets/AI Agent Specialist.mp4"
+            else
+              echo "✗ Video file NOT in dist/assets/"
+            fi
+          fi
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
