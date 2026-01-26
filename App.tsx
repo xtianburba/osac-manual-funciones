@@ -126,9 +126,6 @@ const App: React.FC = () => {
                 <source src={videoPath} type="video/mp4" />
                 Tu navegador no soporta la reproducción de video.
               </video>
-              <div className="mt-4 text-xs text-slate-500 text-center">
-                Ruta: {videoPath}
-              </div>
             </div>
           </div>
         </div>
